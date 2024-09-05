@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import styles from './Cadastro.module.scss';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const schema = yup.object({
   name: yup.string().required('Nome é obrigatório'),
@@ -20,32 +20,31 @@ interface FormInputs {
   confirmPassword: string;
 }
 
-
 export default function Cadastro() {
   const { register, handleSubmit, formState: { errors } } = useForm<FormInputs>({
     resolver: yupResolver(schema),
   });
 
   const navigate = useNavigate();
+
   const onSubmit = async (formData: FormInputs) => {
-    
     try {
       const response = await fetch(`${process.env.REACT_APP_HOST}/users`, {
         method: "POST",
         headers: {
-          "Content-Type": "Application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData), 
       });
 
-      const responseData = await response.json(); 
+      const responseData = await response.json();
 
       if (!response.ok) {
         throw new Error(responseData.error);
       }
 
       localStorage.setItem("@auth/token", responseData.token);
-      navigate("/")
+      navigate("/");
       
     } catch (error) {
       console.error(error);
@@ -84,7 +83,12 @@ export default function Cadastro() {
         </div>
 
         <button type="submit" className={styles.submitButton}>Cadastrar</button>
+        <div>
+        <p>Já tem uma conta? <Link to="/">Faça login</Link></p>
+      </div>
       </form>
+
+      
     </div>
   );
 }

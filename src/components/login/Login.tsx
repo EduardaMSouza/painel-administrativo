@@ -81,7 +81,7 @@ export default function Login() {
           <button type="submit" disabled={isSubmitting}>
             {isSubmitting ? "Carregando..." : "Entrar"}
           </button>
-          <div className={Styles.register_link}>
+          <div>
           <p>Não tem uma conta? <Link to="/cadastro">Cadastre-se</Link></p>
         </div>
         </form>
