@@ -42,10 +42,10 @@ export default function Login() {
 
   return (
     <>
-    <div>
+    <div className={Styles.container_login}>
       <form >
-        <div>
-        <label htmlFor="email">Email:</label>
+      <label htmlFor="email">Email:</label>
+        <div className={Styles.container_individual}>
         <input
           type="email"
           {...register("email", {
@@ -58,9 +58,8 @@ export default function Login() {
         />
         {errors.email && <span>{errors.email.message}</span>}
         </div>
-        
-          <div>
-          <label htmlFor="password">Senha:</label>
+        <label htmlFor="password">Senha:</label>
+          <div className={Styles.container_individual}>
           <input
            type="password"
            {...register("password", {
