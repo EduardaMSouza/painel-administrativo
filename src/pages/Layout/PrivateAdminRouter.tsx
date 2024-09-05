@@ -14,7 +14,7 @@ export function PrivateAdminRoute() {
 
   useEffect(() => {
     const fetchRole = async () => {
-      const token = localStorage.getItem("@Auth/token");
+      const token = localStorage.getItem("@auth/token");
 
       if (!token) {
         setError(true);

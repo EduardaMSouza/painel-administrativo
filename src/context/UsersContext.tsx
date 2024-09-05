@@ -18,11 +18,21 @@ export const UsersProvider : React.FC<UsersProviderProps> = ({ children }: Users
     async function fetchData() {
       try {
 
-        const response = await fetch(`${process.env.REACT_APP_HOST}/users`);
+        const token = localStorage.getItem("@auth/token");
+
+        if (!token) {
+          return;
+        }
+
+        const response = await fetch(`${process.env.REACT_APP_HOST}/users`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }});
 
         const data: User[] = await response.json();
 
         setUsers(data);
+        console.log(data)
       } catch (error) {
 
         console.log("Erro ao buscar os dados dos usuários", error);

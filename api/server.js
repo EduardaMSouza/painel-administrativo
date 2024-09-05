@@ -2,12 +2,17 @@ const jwt = require('jsonwebtoken');
 const jsonServer = require('json-server');
 const bodyParser = require('body-parser');
 const server = jsonServer.create();
-const router = jsonServer.router('../db.json');
+const router = jsonServer.router('db.json');
 const middlewares = jsonServer.defaults();
 require('dotenv').config();
 
-const SECRET_KEY = process.env.REACT_APP_SECRET_KEY;
+const SECRET_KEY = "process.env.REACT_APP_SECRET_KEY";
 const expiresIn = '24h';
+
+if (!SECRET_KEY) {
+  console.error('SECRET_KEY não esta definida');
+  process.exit(1);
+}
 
 server.use(bodyParser.urlencoded({ extended: true }));
 server.use(bodyParser.json());
@@ -26,7 +31,7 @@ function verifyToken(token) {
 }
 
 function authenticate(req, res, next) {
-  if (req.method === 'POST' && req.url === '/auth/login' || req.method === 'POST' && req.url === '/users') {
+  if (req.method === 'POST' && (req.url === '/auth/login' || req.url === '/users')) {
     return next();
   }
 
@@ -55,8 +60,8 @@ function authorize(req, res, next) {
   next();
 }
 
-server.use(authenticate); 
-server.use(authorize); 
+server.use(authenticate);
+server.use(authorize);
 
 server.post('/auth/login', (req, res) => {
   const { email, password } = req.body;
@@ -72,10 +77,6 @@ server.post('/auth/login', (req, res) => {
   return res.status(200).json({ token });
 });
 
-server.get('/admin/data', (req, res) => {
-  return res.status(200).json({ message: 'Bem-vindo, administrador!' });
-});
-
 server.get('/users', (req, res) => {
   const db = router.db;
   const users = db.get('users').value();
@@ -85,14 +86,14 @@ server.get('/users', (req, res) => {
 server.post('/users', (req, res) => {
   const { name, email, password, role } = req.body;
   const db = router.db;
-  
+
   const users = db.get('users').value();
   if (!Array.isArray(users)) {
     return res.status(500).json({ error: 'A coleção de usuários não está disponível.' });
   }
 
   const newUser = {
-    id: users.length + 1, 
+    id: users.length + 1,
     name,
     email,
     password,
@@ -137,7 +138,6 @@ server.delete('/users/:id', (req, res) => {
 });
 
 server.get('/me', (req, res) => {
-  
   if (!req.user) {
     return res.status(401).json({ message: 'Não autorizado' });
   }
@@ -145,11 +145,11 @@ server.get('/me', (req, res) => {
   const db = router.db;
   const userId = req.user.id;
   const user = db.get('users').find({ id: userId }).value();
-  
+
   if (!user) {
     return res.status(404).json({ message: 'Usuário não encontrado' });
   }
-  
+
   res.status(200).json({ role: user.role });
 });
 
