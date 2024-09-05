@@ -1,0 +1,19 @@
+{
+    "users": [
+      {
+        "id": 1,
+        "name": "Alice Silva",
+        "email": "alice.silva@example.com",
+        "password": "senha123",
+        "role": "admin"
+      },
+      {
+        "id": 2,
+        "name": "Bob Oliveira",
+        "email": "bob.oliveira@example.com",
+        "password": "senha456",
+        "role": "user"
+      }
+    ]
+  }
+  
