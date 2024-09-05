@@ -68,10 +68,12 @@ server.post('/auth/login', (req, res) => {
 
   const db = router.db;
   const user = db.get('users').find({ email, password }).value();
-
+  console.log("isdjaijdisajidjaisd")
   if (!user) {
     return res.status(401).json({ message: 'Credenciais inválidas' });
   }
+  console.log("isdjaijdisajidjaisd")
+
 
   const token = createToken({ id: user.id, role: user.role });
   return res.status(200).json({ token });
