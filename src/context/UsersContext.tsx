@@ -53,7 +53,7 @@ export const UsersProvider : React.FC<UsersProviderProps> = ({ children }: Users
 export function useUserContext() {
   const context = useContext(UserContext);
   if (context === null) {
-    throw new Error("useUserContext must be used within a UsersProvider");
+    throw new Error("useUserContext deve estar dentro de um UsersProvider");
   }
   return context;
 }

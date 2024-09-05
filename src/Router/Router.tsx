@@ -5,25 +5,32 @@ import Cadastro from "../pages/Cadastro";
 import Header from "../components/Header/Header";
 import Dashboard from "../pages/Dashboard";
 import Footer from "../components/Footer/Footer";
+import { LoginProvider } from "../context/LoginContext";
 
 export default function Router() {
     return (
-        <BrowserRouter>
-            <Header/>
-            <Routes>
-                <Route
-                    path="/"
-                    element={<Login/>}
-                />
-                <Route
-                    path="/cadastro"
-                    element={<Cadastro />}
-                />
-                <Route path="/dashboard" element={<PrivateRoute />}>
-                <Route path="" element={<Dashboard/>}></Route>
-                </Route>
-            </Routes>
-            <Footer/>
-        </BrowserRouter>
+        <>
+            <LoginProvider>
+                <BrowserRouter>
+                    <Header />
+                    <Routes>
+                        <Route
+                            path="/"
+                            element={<Login />}
+                        />
+                        <Route
+                            path="/cadastro"
+                            element={<Cadastro />}
+                        />
+                        <Route path="/dashboard" element={<PrivateRoute />}>
+                            <Route path="" element={<Dashboard />}></Route>
+                        </Route>
+                    </Routes>
+                    <Footer />
+                </BrowserRouter>
+            </LoginProvider>
+
+        </>
+
     );
 }
