@@ -1,9 +1,11 @@
-import DashboardComponent from '../components/Dashboard/Dashboard'
+import DashboardClients from "../components/Dashboard/Dashboard";
 
-export default function Dashboard() {
-    return(
+function Dashboard(): JSX.Element {
+    return (
         <>
-            <DashboardComponent/>
+            <DashboardClients/>
         </>
-    )
+    );
 }
+
+export default Dashboard;

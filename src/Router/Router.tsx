@@ -3,6 +3,7 @@ import { PrivateRoute } from "../pages/Layout/PrivateRoute";
 import Login from "../pages/Login"
 import Cadastro from "../pages/Cadastro";
 import Header from "../components/Header/Header";
+import Dashboard from "../pages/Dashboard";
 
 
 export default function Router() {
@@ -19,6 +20,7 @@ export default function Router() {
                     element={<Cadastro />}
                 />
                 <Route path="/dashboard" element={<PrivateRoute />}>
+                <Route path="" element={<Dashboard/>}></Route>
                 </Route>
             </Routes>
         </BrowserRouter>

@@ -1,0 +1,29 @@
+.dashboard {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .usersContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .userCard {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%; 
+  }
+  
+  .userField {
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
