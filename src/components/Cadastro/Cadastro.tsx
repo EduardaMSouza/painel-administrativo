@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import styles from './Cadastro.module.scss';
+import { useNavigate } from 'react-router-dom';
 
 const schema = yup.object({
   name: yup.string().required('Nome é obrigatório'),
@@ -19,13 +20,36 @@ interface FormInputs {
   confirmPassword: string;
 }
 
+
 export default function Cadastro() {
   const { register, handleSubmit, formState: { errors } } = useForm<FormInputs>({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data: FormInputs) => {
-    console.log('Cadastro realizado com sucesso:', data);
+  const navigate = useNavigate();
+  const onSubmit = async (formData: FormInputs) => {
+    
+    try {
+      const response = await fetch(`${process.env.REACT_APP_HOST}/users`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "Application/json",
+        },
+        body: JSON.stringify(formData), 
+      });
+
+      const responseData = await response.json(); 
+
+      if (!response.ok) {
+        throw new Error(responseData.error);
+      }
+
+      localStorage.setItem("@auth/token", responseData.token);
+      navigate("/")
+      
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

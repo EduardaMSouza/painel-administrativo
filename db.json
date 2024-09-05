@@ -1,19 +1,24 @@
 {
-    "users": [
-      {
-        "id": 1,
-        "name": "Alice Silva",
-        "email": "alice.silva@example.com",
-        "password": "senha123",
-        "role": "admin"
-      },
-      {
-        "id": 2,
-        "name": "Bob Oliveira",
-        "email": "bob.oliveira@example.com",
-        "password": "senha456",
-        "role": "user"
-      }
-    ]
+  "users": [
+    {
+      "id": 1,
+      "name": "Alice Silva",
+      "email": "alice.silva@example.com",
+      "password": "senha123",
+      "role": "admin"
+    },
+    {
+      "id": 2,
+      "name": "Bob Oliveira",
+      "email": "bob.oliveira@example.com",
+      "password": "senha456",
+      "role": "user"
+    },
+    {
+      "id": 3,
+      "name": "jhonatan",
+      "email": "jhonatan@gmail.com",
+      "password": "Santos123"
+    }
+  ]
 }
-  

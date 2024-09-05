@@ -19,7 +19,7 @@ export default function Login() {
 
   async function authenticate(formData: FormData) {
     try {
-      const response = await fetch(`/login`, {
+      const response = await fetch(`${process.env.REACT_APP_HOST}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "Application/json",
@@ -43,7 +43,7 @@ export default function Login() {
   return (
     <>
     <div className={Styles.container_login}>
-      <form >
+      <form onSubmit={handleSubmit((data) => authenticate(data))}>
       <label htmlFor="email">Email:</label>
         <div className={Styles.container_individual}>
         <input
