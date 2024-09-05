@@ -1,7 +1,8 @@
-import React from "react";
-import { useNavigate, Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Styles from "./Login.module.scss";
+import { Bounce, toast, ToastContainer } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 
 interface FormData {
@@ -17,6 +18,25 @@ export default function Login() {
   } = useForm<FormData>();
 
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    const error = location.state?.error;
+    if (error) {
+      toast.error(error, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+        });
+    }
+    location.state = {}
+  }, [location.state]);
 
   async function authenticate(formData: FormData) {
     try {
@@ -27,7 +47,6 @@ export default function Login() {
         },
         body: JSON.stringify(formData),
       });
-
       const data = await response.json();
 
       if (!response.ok) {
