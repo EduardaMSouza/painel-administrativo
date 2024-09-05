@@ -129,6 +129,23 @@ server.delete('/users/:id', (req, res) => {
   res.status(200).json({ message: 'Usuário removido com sucesso' });
 });
 
+server.get('/me', (req, res) => {
+  
+  if (!req.user) {
+    return res.status(401).json({ message: 'Não autorizado' });
+  }
+
+  const db = router.db;
+  const userId = req.user.id;
+  const user = db.get('users').find({ id: userId }).value();
+  
+  if (!user) {
+    return res.status(404).json({ message: 'Usuário não encontrado' });
+  }
+  
+  res.status(200).json({ role: user.role });
+});
+
 server.use(router);
 
 server.listen(3001, () => {
