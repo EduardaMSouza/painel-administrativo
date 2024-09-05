@@ -152,4 +152,4 @@ server.listen(3001, () => {
   console.log('JSON Server está rodando na porta 3001');
 });
 
-export default server;
+// export default server;

@@ -1,5 +1,5 @@
 // import React from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Styles from "./Login.module.scss"
 
@@ -16,7 +16,7 @@ export default function Login() {
   } = useForm<FormData>();
 
  
-
+  const navigate = useNavigate();
   async function authenticate(formData: FormData) {
     try {
       const response = await fetch(`${process.env.REACT_APP_HOST}/auth/login`, {
@@ -34,6 +34,7 @@ export default function Login() {
       }
 
       localStorage.setItem("@auth/token", data.token);
+      navigate("/dashboard");
       
     } catch (error) {
       console.error(error);
