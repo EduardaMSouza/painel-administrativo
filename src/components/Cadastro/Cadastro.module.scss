@@ -47,6 +47,12 @@
     border: 1px solid #ccc;
     border-radius: 8px;
     box-sizing: border-box;
+
+   
+  }
+
+  .inputError{
+    border: 2px solid red;
   }
   
   label {
@@ -73,7 +79,7 @@
     }
   }
   
-  .error {
+  .formGroup .error {
+    margin-top: -0.5rem;
     color: red;
-    font-size: 0.875rem;
   }
