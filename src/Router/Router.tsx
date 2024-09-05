@@ -4,7 +4,7 @@ import Login from "../pages/Login"
 import Cadastro from "../pages/Cadastro";
 import Header from "../components/Header/Header";
 import Dashboard from "../pages/Dashboard";
-
+import Footer from "../components/Footer/Footer";
 
 export default function Router() {
     return (
@@ -23,6 +23,7 @@ export default function Router() {
                 <Route path="" element={<Dashboard/>}></Route>
                 </Route>
             </Routes>
+            <Footer/>
         </BrowserRouter>
     );
 }
