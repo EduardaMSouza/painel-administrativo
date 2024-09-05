@@ -1,7 +1,8 @@
-import React from "react";
-import { useNavigate, Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Styles from "./Login.module.scss";
+import { Bounce, toast, ToastContainer } from "react-toastify";
 
 interface FormData {
   email: string;
@@ -16,6 +17,25 @@ export default function Login() {
   } = useForm<FormData>();
 
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    const error = location.state?.error;
+    if (error) {
+      toast.error(error, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+        });
+    }
+    location.state = {}
+  }, [location.state]);
 
   async function authenticate(formData: FormData) {
     try {
@@ -26,7 +46,6 @@ export default function Login() {
         },
         body: JSON.stringify(formData),
       });
-      console.log(response);
       const data = await response.json();
 
       if (!response.ok) {
@@ -35,7 +54,7 @@ export default function Login() {
 
       localStorage.setItem("@auth/token", data.token);
       navigate("/dashboard");
-      
+
     } catch (error) {
       console.error(error);
     }
@@ -77,15 +96,14 @@ export default function Login() {
             />
             {errors.password && <span>{errors.password.message}</span>}
           </div>
-          
+
           <button type="submit" disabled={isSubmitting}>
             {isSubmitting ? "Carregando..." : "Entrar"}
           </button>
           <div>
-          <p>Não tem uma conta? <Link to="/cadastro">Cadastre-se</Link></p>
-        </div>
+            <p>Não tem uma conta? <Link to="/cadastro">Cadastre-se</Link></p>
+          </div>
         </form>
-        
       </div>
     </>
   );

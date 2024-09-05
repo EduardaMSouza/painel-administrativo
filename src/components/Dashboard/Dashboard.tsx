@@ -3,7 +3,7 @@ import styles from './Dashboard.module.scss';
 
 export default function Dashboard() {
   const { users } = useUserContext(); 
-
+  console.log(users);
   return (
     <section className={styles.dashboard}>
       <h1>Lista de Usuários</h1>
