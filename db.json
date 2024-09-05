@@ -19,6 +19,12 @@
       "name": "jhonatan",
       "email": "jhonatan@gmail.com",
       "password": "Santos123"
+    },
+    {
+      "id": 4,
+      "name": "Eduarda",
+      "email": "Eduarda@gmail.com",
+      "password": "12345678"
     }
   ]
 }

@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const jsonServer = require('json-server');
 const bodyParser = require('body-parser');
 const server = jsonServer.create();
-const router = jsonServer.router('db.json');
+const router = jsonServer.router('../db.json');
 const middlewares = jsonServer.defaults();
 require('dotenv').config();
 
@@ -85,13 +85,20 @@ server.get('/users', (req, res) => {
 server.post('/users', (req, res) => {
   const { name, email, password, role } = req.body;
   const db = router.db;
+  
+  const users = db.get('users').value();
+  if (!Array.isArray(users)) {
+    return res.status(500).json({ error: 'A coleção de usuários não está disponível.' });
+  }
+
   const newUser = {
-    id: db.get('users').value().length + 1,
+    id: users.length + 1, 
     name,
     email,
     password,
     role
   };
+
   db.get('users').push(newUser).write();
   res.status(201).json(newUser);
 });
