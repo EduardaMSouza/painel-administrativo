@@ -3,6 +3,7 @@ import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Styles from "./Login.module.scss";
 import { Bounce, toast, ToastContainer } from "react-toastify";
+import { LoadingButton } from "@mui/lab";
 
 interface FormData {
   email: string;
@@ -54,57 +55,63 @@ export default function Login() {
 
       localStorage.setItem("@auth/token", data.token);
       navigate("/dashboard");
-
     } catch (error) {
       console.error(error);
     }
   }
 
   return (
-    <>
-      <div className={Styles.container_login}>
-        <form onSubmit={handleSubmit((data) => authenticate(data))}>
-          <label htmlFor="email">Email:</label>
-          <div className={Styles.container_individual}>
-            <input
-              type="email"
-              {...register("email", {
-                required: "O email é obrigatório",
-                pattern: {
-                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                  message: "Insira um email válido",
-                },
-              })}
-            />
-            {errors.email && <span>{errors.email.message}</span>}
-          </div>
-          <label htmlFor="password">Senha:</label>
-          <div className={Styles.container_individual}>
-            <input
-              type="password"
-              {...register("password", {
-                required: "A senha é obrigatória",
-                minLength: {
-                  value: 6,
-                  message: "A senha deve ter no mínimo 6 caracteres",
-                },
-                maxLength: {
-                  value: 20,
-                  message: "A senha deve ter no máximo 20 caracteres",
-                },
-              })}
-            />
-            {errors.password && <span>{errors.password.message}</span>}
-          </div>
+    <div className={Styles.container_login}>
+      <form onSubmit={handleSubmit((data) => authenticate(data))}>
+        <label htmlFor="email">Email:</label>
+        <div className={Styles.container_individual}>
+          <input
+            type="email"
+            {...register("email", {
+              required: "O email é obrigatório",
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "Insira um email válido",
+              },
+            })}
+          />
+          {errors.email && <span>{errors.email.message}</span>}
+        </div>
 
-          <button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "Carregando..." : "Entrar"}
-          </button>
-          <div>
-            <p>Não tem uma conta? <Link to="/cadastro">Cadastre-se</Link></p>
-          </div>
-        </form>
-      </div>
-    </>
+        <label htmlFor="password">Senha:</label>
+        <div className={Styles.container_individual}>
+          <input
+            type="password"
+            {...register("password", {
+              required: "A senha é obrigatória",
+              minLength: {
+                value: 6,
+                message: "A senha deve ter no mínimo 6 caracteres",
+              },
+              maxLength: {
+                value: 20,
+                message: "A senha deve ter no máximo 20 caracteres",
+              },
+            })}
+          />
+          {errors.password && <span>{errors.password.message}</span>}
+        </div>
+
+        <LoadingButton
+          type="submit"
+          loading={isSubmitting}
+          variant="contained"
+          className={Styles.btn_login}
+        >
+          Entrar
+        </LoadingButton>
+
+        <div>
+          <p>
+            Não tem uma conta? <Link to="/cadastro">Cadastre-se</Link>
+          </p>
+        </div>
+      </form>
+    </div>
   );
 }
