@@ -4,6 +4,7 @@ import * as yup from 'yup';
 import styles from './Cadastro.module.scss';
 import { useNavigate, Link } from 'react-router-dom';
 
+// Esquema de validação do Yup
 const schema = yup.object({
   name: yup.string().required('Nome é obrigatório'),
   email: yup.string().email('Email inválido').required('Email é obrigatório'),
@@ -21,7 +22,7 @@ interface FormInputs {
 }
 
 export default function Cadastro() {
-  const { register, handleSubmit, formState: { errors } } = useForm<FormInputs>({
+  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormInputs>({
     resolver: yupResolver(schema),
   });
 
@@ -44,7 +45,9 @@ export default function Cadastro() {
       }
 
       localStorage.setItem("@auth/token", responseData.token);
-      navigate("/");
+
+      
+      navigate("/dashboard");
       
     } catch (error) {
       console.error(error);
@@ -54,24 +57,28 @@ export default function Cadastro() {
   return (
     <div className={styles.container_login}>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.formContainer}>
+       
         <div className={styles.formGroup}>
           <label htmlFor="name">Nome</label>
           <input id="name" type="text" {...register('name')} />
           {errors.name && <p className={styles.error}>{errors.name.message}</p>}
         </div>
 
+      
         <div className={styles.formGroup}>
           <label htmlFor="email">Email</label>
           <input id="email" type="email" {...register('email')} />
           {errors.email && <p className={styles.error}>{errors.email.message}</p>}
         </div>
 
+        
         <div className={styles.formGroup}>
           <label htmlFor="password">Senha</label>
           <input id="password" type="password" {...register('password')} />
           {errors.password && <p className={styles.error}>{errors.password.message}</p>}
         </div>
 
+        
         <div className={styles.formGroup}>
           <label htmlFor="confirmPassword">Confirmar Senha</label>
           <input
@@ -82,13 +89,15 @@ export default function Cadastro() {
           {errors.confirmPassword && <p className={styles.error}>{errors.confirmPassword.message}</p>}
         </div>
 
-        <button type="submit" className={styles.submitButton}>Cadastrar</button>
-        <div>
-        <p>Já tem uma conta? <Link to="/">Faça login</Link></p>
-      </div>
-      </form>
+       
+        <button type="submit" className={styles.submitButton} disabled={isSubmitting}>
+          {isSubmitting ? "Carregando..." : "Cadastrar"}
+        </button>
 
-      
+        <div>
+          <p>Já tem uma conta? <Link to="/">Faça login</Link></p>
+        </div>
+      </form>
     </div>
   );
 }

@@ -7,5 +7,7 @@ export function PrivateRoute() {
     return <Navigate to="/" state={{ error: "Usuário precisa estar logado para entrar nessa página" }} />;
   }
 
+  
+
   return <Outlet />;
 }
