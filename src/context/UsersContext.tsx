@@ -11,13 +11,13 @@ interface UsersProviderProps {
   children: React.ReactNode; 
 }
 
-export const UsersProvider = ({ children }: UsersProviderProps) => {
+export const UsersProvider : React.FC<UsersProviderProps> = ({ children }: UsersProviderProps) => {
   const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        
+
         const response = await fetch(`${process.env.REACT_APP_HOST}/users`);
 
         const data: User[] = await response.json();
