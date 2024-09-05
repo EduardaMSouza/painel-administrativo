@@ -151,3 +151,5 @@ server.use(router);
 server.listen(3001, () => {
   console.log('JSON Server está rodando na porta 3001');
 });
+
+module.exports = server
