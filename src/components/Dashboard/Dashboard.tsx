@@ -114,7 +114,7 @@ export default function Dashboard() {
           ))
         ) : (
           filteredUsers.map((user) => (
-            <UserCard key={user.id} user={user} onUpdate={refreshUsers} onDelete={refreshUsers} />
+            <UserCard key={user.id} user={user} />
           ))
         )}
       </div>

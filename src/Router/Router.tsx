@@ -6,6 +6,7 @@ import Header from "../components/Header/Header";
 import Dashboard from "../pages/Dashboard";
 import Footer from "../components/Footer/Footer";
 import { LoginProvider } from "../context/LoginContext";
+import UserManagePage from "../components/UserManagePage/UserManagePage";
 
 export default function Router() {
     return (
@@ -24,6 +25,7 @@ export default function Router() {
                         />
                         <Route path="/dashboard" element={<PrivateRoute />}>
                             <Route path="" element={<Dashboard />}></Route>
+                            <Route path="users/:id" element={<UserManagePage />} />
                         </Route>
                     </Routes>
                     <Footer />

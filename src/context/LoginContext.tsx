@@ -7,34 +7,49 @@ interface LoginContextType {
 
 export const LoginContext = createContext<LoginContextType | null>(null);
 
-interface loginProviderProps {
+interface LoginProviderProps {
     children: React.ReactNode;
 }
 
-export const LoginProvider: React.FC<loginProviderProps> = ({ children }: loginProviderProps) => {
+export const LoginProvider: React.FC<LoginProviderProps> = ({ children }: LoginProviderProps) => {
     const [login, setLogin] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(true); // Estado para verificar se a autenticação está carregando
 
     useEffect(() => {
         async function fetchData() {
-
-
             const token = localStorage.getItem("@auth/token");
 
             if (!token) {
+                setLoading(false); // Termina o carregamento mesmo sem token
                 return;
             }
 
-            await fetch(`${process.env.REACT_APP_HOST}/me`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
+            try {
+                const response = await fetch(`${process.env.REACT_APP_HOST}/me`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+
+                if (response.ok) {
+                    setLogin(true);
+                } else {
+                    setLogin(false);
                 }
-            }).then(() => 
-                setLogin(true)
-           ).catch(() => setLogin(false));
+            } catch (error) {
+                console.error('Erro ao validar o token:', error);
+                setLogin(false);
+            } finally {
+                setLoading(false); // Termina o carregamento após a verificação
+            }
         }
 
         fetchData();
-    }, [login]);
+    }, []); // Removemos `login` das dependências, pois só queremos que o efeito rode uma vez
+
+    if (loading) {
+        return <div>Carregando...</div>; // Você pode substituir isso com um componente de carregamento real
+    }
 
     return (
         <LoginContext.Provider value={{ login, setLogin }}>
