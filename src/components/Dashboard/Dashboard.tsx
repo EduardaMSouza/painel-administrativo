@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from './Dashboard.module.scss';
 import User from "../../utils/user";
-import { Pagination, Skeleton, Card } from "@mui/material";
+import { Pagination, Skeleton, Card, TextField } from "@mui/material";
 import UserCard from "../UserCard/UserCard";
 
 interface PaginationInfo {
@@ -28,7 +28,7 @@ export default function Dashboard() {
   const [page, setPage] = useState(1);
   const [pagination, setPagination] = useState<PaginationInfo | null>(null);
   const [loading, setLoading] = useState(true); 
-  const [percentage, setPercentage] = useState();
+  const [filter, setFilter] = useState(''); 
 
   const handleChange = (_event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
@@ -68,9 +68,24 @@ export default function Dashboard() {
     fetchData(page, 3);
   };
 
+
+  const filteredUsers = users.filter(user =>
+    user.name.toLowerCase().includes(filter.toLowerCase())
+  );
+
   return (
     <section className={styles.dashboard}>
       <h1>Lista de Usuários</h1>
+      
+      <TextField
+        label="Filtrar por nome"
+        variant="outlined"
+        value={filter}
+        onChange={(e) => setFilter(e.target.value)} 
+        fullWidth
+        margin="normal"
+      />
+
       <Card
           sx={{
             padding: "20px",
@@ -97,7 +112,7 @@ export default function Dashboard() {
             </div>
           ))
         ) : (
-          users.map((user) => (
+          filteredUsers.map((user) => (
             <UserCard key={user.id} user={user} onUpdate={refreshUsers} onDelete={refreshUsers} />
           ))
         )}
