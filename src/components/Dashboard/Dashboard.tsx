@@ -3,6 +3,7 @@ import styles from './Dashboard.module.scss';
 import User from "../../utils/user";
 import { Pagination, Skeleton, Card, TextField } from "@mui/material";
 import UserCard from "../UserCard/UserCard";
+import stylesCard from "../UserCard/user-card.module.scss"
 
 interface PaginationInfo {
   currentPage: number;
@@ -103,12 +104,12 @@ export default function Dashboard() {
       <div className={styles.usersContainer}>
         {loading ? (
           Array.from(new Array(3)).map((_, index) => (
-            <div key={index} className={styles.userCard}>
+            <div key={index} className={stylesCard.userCard}>
+              <Skeleton variant="text" width={120} height={30} style={{ marginBottom: '10px' }} />
+              <Skeleton variant="text" width={80} height={20} style={{ marginBottom: '5px' }} />
+              <Skeleton variant="text" width={200} height={20} style={{ marginBottom: '5px' }} />
+              <Skeleton variant="text" width={180} height={20} style={{ marginBottom: '5px' }} />
               <Skeleton variant="text" width={100} height={20} />
-              <Skeleton variant="text" width={200} height={20} />
-              <Skeleton variant="text" width={150} height={20} />
-              <Skeleton variant="text" width={180} height={20} />
-              <Skeleton variant="text" width={120} height={20} />
             </div>
           ))
         ) : (
