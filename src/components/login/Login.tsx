@@ -5,6 +5,7 @@ import Styles from "./Login.module.scss";
 import { Bounce, toast, ToastContainer } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { TextField, Button } from "@mui/material";
+import { useLoginContext } from "../../context/LoginContext";
 
 interface FormData {
   email: string;
@@ -12,6 +13,7 @@ interface FormData {
 }
 
 export default function Login() {
+  const {login, setLogin} = useLoginContext()
   const {
     handleSubmit,
     register,
@@ -56,6 +58,7 @@ export default function Login() {
 
       localStorage.setItem("@auth/token", data.token);
       navigate("/dashboard");
+      setLogin(true)
     } catch (error) {
       console.error(error);
     }

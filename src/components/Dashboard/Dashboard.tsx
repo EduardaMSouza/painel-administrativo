@@ -21,6 +21,7 @@ interface PercentageChange {
 interface apiResponse {
   data: User[];
   paginationInfo: PaginationInfo;
+  percentageChange: PercentageChange;
 }
 
 export default function Dashboard() {
@@ -29,6 +30,7 @@ export default function Dashboard() {
   const [page, setPage] = useState(1);
   const [pagination, setPagination] = useState<PaginationInfo | null>(null);
   const [loading, setLoading] = useState(true); 
+  const [percentage, setPercentage] = useState();
 
   const handleChange = (_event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
@@ -51,13 +53,14 @@ export default function Dashboard() {
           }
         });
 
-        console.log(page);
+        console.log(response);
 
         const data: apiResponse = await response.json();
         setPagination(data.paginationInfo);
         setUsers(data.data);
         setLoading(false); 
-        console.log(data);
+        // setPercentage()
+        console.log(response);
       } catch (error) {
         console.log("Erro ao buscar os dados dos usuários", error);
         setLoading(false);

@@ -4,6 +4,7 @@ import * as yup from "yup";
 import styles from "./Cadastro.module.scss";
 import { useNavigate, Link } from "react-router-dom";
 import { TextField, Button } from "@mui/material";
+import { useLoginContext } from "../../context/LoginContext";
 
 
 // Esquema de validação do Yup
@@ -30,6 +31,8 @@ interface FormInputs {
 }
 
 export default function Cadastro() {
+  const {login, setLogin} = useLoginContext()
+
   const {
     register,
     handleSubmit,
@@ -56,9 +59,8 @@ export default function Cadastro() {
         throw new Error(responseData.error);
       }
 
-      console.log(responseData.token)
-      localStorage.setItem("@auth/token", responseData.token);
-
+      localStorage.setItem("@auth/token", responseData);
+      setLogin(true)
       navigate("/dashboard");
     } catch (error) {
       console.error(error);
