@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from './Dashboard.module.scss';
 import User from "../../utils/user";
-import { Card, Pagination } from "@mui/material";
+import { Card, Pagination, Skeleton } from "@mui/material";
 import UserCard from "../UserCard/UserCard";
 
 
@@ -81,26 +81,25 @@ export default function Dashboard() {
               <Skeleton variant="text" width={120} height={20} />
             </div>
           ))
-        ) : {users.map((user) => (
-          <UserCard user={user}/>
-        ))}}
-            </div>
+        ) : (
+          users.map((user) => (
+            <UserCard key={user.id} user={user} />
           ))
         )}
-        {users && (
-          <Pagination
-            count={pagination?.totalPages}
-            page={page}
-            onChange={handleChange}
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignContent: "center",
-              gridColumn: "span 2",
-            }}
-          />
-        )}
       </div>
+      {pagination && (
+        <Pagination
+          count={pagination.totalPages}
+          page={page}
+          onChange={handleChange}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignContent: "center",
+            gridColumn: "span 2",
+          }}
+        />
+      )}
     </section>
   );
 }
