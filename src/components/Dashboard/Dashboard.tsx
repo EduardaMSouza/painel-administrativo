@@ -4,7 +4,6 @@ import User from "../../utils/user";
 import { Pagination, Skeleton } from "@mui/material";
 import UserCard from "../UserCard/UserCard";
 
-
 interface PaginationInfo {
   currentPage: number;
   totalPages: number;
@@ -25,7 +24,6 @@ interface apiResponse {
 }
 
 export default function Dashboard() {
-
   const [users, setUsers] = useState<User[]>([]);
   const [page, setPage] = useState(1);
   const [pagination, setPagination] = useState<PaginationInfo | null>(null);
@@ -38,37 +36,37 @@ export default function Dashboard() {
     setUsers([]);
   };
 
-  useEffect(() => {
-    async function fetchData(pages: number, pageSize: number) {
-      try {
-        const token = localStorage.getItem("@auth/token");
+  const fetchData = async (pages: number, pageSize: number) => {
+    try {
+      const token = localStorage.getItem("@auth/token");
 
-        if (!token) {
-          return;
-        }
-
-        const response = await fetch(`${process.env.REACT_APP_HOST}/users?page=${pages}&limit=${pageSize}`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-
-        console.log(response);
-
-        const data: apiResponse = await response.json();
-        setPagination(data.paginationInfo);
-        setUsers(data.data);
-        setLoading(false); 
-        // setPercentage()
-        console.log(response);
-      } catch (error) {
-        console.log("Erro ao buscar os dados dos usuários", error);
-        setLoading(false);
+      if (!token) {
+        return;
       }
-    }
 
+      const response = await fetch(`${process.env.REACT_APP_HOST}/users?page=${pages}&limit=${pageSize}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      const data: apiResponse = await response.json();
+      setPagination(data.paginationInfo);
+      setUsers(data.data);
+      setLoading(false); 
+    } catch (error) {
+      console.log("Erro ao buscar os dados dos usuários", error);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchData(page, 3);
   }, [page]);
+
+  const refreshUsers = () => {
+    fetchData(page, 3);
+  };
 
   return (
     <section className={styles.dashboard}>
@@ -86,7 +84,7 @@ export default function Dashboard() {
           ))
         ) : (
           users.map((user) => (
-            <UserCard key={user.id} user={user} />
+            <UserCard key={user.id} user={user} onUpdate={refreshUsers} onDelete={refreshUsers} />
           ))
         )}
       </div>
