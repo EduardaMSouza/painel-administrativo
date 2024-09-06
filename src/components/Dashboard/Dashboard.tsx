@@ -60,7 +60,7 @@ export default function Dashboard() {
     }
 
     fetchData(page, 3);
-  }, [page, users]);
+  }, [page]);
 
   return (
     <section className={styles.dashboard}>
