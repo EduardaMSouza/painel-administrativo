@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import styles from './Dashboard.module.scss';
 import User from "../../utils/user";
-import { Pagination } from "@mui/material";
+import { Card, Pagination } from "@mui/material";
+import UserCard from "../UserCard/UserCard";
 
 interface PaginationInfo {
   currentPage: number;
@@ -67,25 +68,7 @@ export default function Dashboard() {
       <h1>Lista de Usuários</h1>
       <div className={styles.usersContainer}>
         {users.map((user) => (
-          <div key={user.id} className={styles.userCard}>
-            <div className={styles.userField}>
-              <strong>ID:</strong> {user.id}
-            </div>
-            <div className={styles.userField}>
-              <strong>Nome:</strong> {user.name}
-            </div>
-            <div className={styles.userField}>
-              <strong>Email:</strong> {user.email}
-            </div>
-            <div className={styles.userField}>
-              <strong>Senha:</strong> {user.password}
-            </div>
-            {user.role && (
-              <div className={styles.userField}>
-                <strong>Função:</strong> {user.role}
-              </div>
-            )}
-          </div>
+          <UserCard user={user}/>
         ))}
         {users && (
           <Pagination
