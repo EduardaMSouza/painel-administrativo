@@ -4,6 +4,7 @@ import User from "../../utils/user";
 import { Card, Pagination } from "@mui/material";
 import UserCard from "../UserCard/UserCard";
 
+
 interface PaginationInfo {
   currentPage: number;
   totalPages: number;
@@ -26,16 +27,18 @@ export default function Dashboard() {
 
   const [users, setUsers] = useState<User[]>([]);
   const [page, setPage] = useState(1);
-  const [pagination, setPagination] = useState<PaginationInfo | null>(null)
+  const [pagination, setPagination] = useState<PaginationInfo | null>(null);
+  const [loading, setLoading] = useState(true); 
 
   const handleChange = (_event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
+    setLoading(true); 
     setUsers([]);
   };
+
   useEffect(() => {
     async function fetchData(pages: number, pageSize: number) {
       try {
-
         const token = localStorage.getItem("@auth/token");
 
         if (!token) {
@@ -48,15 +51,16 @@ export default function Dashboard() {
           }
         });
 
-        console.log(page)
+        console.log(page);
 
         const data: apiResponse = await response.json();
-        setPagination(data.paginationInfo)
+        setPagination(data.paginationInfo);
         setUsers(data.data);
-        console.log(data)
+        setLoading(false); 
+        console.log(data);
       } catch (error) {
-
         console.log("Erro ao buscar os dados dos usuários", error);
+        setLoading(false);
       }
     }
 
@@ -67,9 +71,22 @@ export default function Dashboard() {
     <section className={styles.dashboard}>
       <h1>Lista de Usuários</h1>
       <div className={styles.usersContainer}>
-        {users.map((user) => (
+        {loading ? (
+          Array.from(new Array(3)).map((_, index) => (
+            <div key={index} className={styles.userCard}>
+              <Skeleton variant="text" width={100} height={20} />
+              <Skeleton variant="text" width={200} height={20} />
+              <Skeleton variant="text" width={150} height={20} />
+              <Skeleton variant="text" width={180} height={20} />
+              <Skeleton variant="text" width={120} height={20} />
+            </div>
+          ))
+        ) : {users.map((user) => (
           <UserCard user={user}/>
-        ))}
+        ))}}
+            </div>
+          ))
+        )}
         {users && (
           <Pagination
             count={pagination?.totalPages}
