@@ -6,11 +6,8 @@ import Header from "../components/Header/Header";
 import Dashboard from "../pages/Dashboard";
 import Footer from "../components/Footer/Footer";
 import { LoginProvider } from "../context/LoginContext";
-<<<<<<< HEAD
 import UserManagePage from "../components/UserManagePage/UserManagePage";
-=======
 import NotFound from "../pages/NotFound/NotFound";
->>>>>>> 40e8e9f98ff86f0fabfec8e27fc2c6fd6d1a67ab
 
 export default function Router() {
     return (
@@ -22,12 +19,9 @@ export default function Router() {
                         <Route path="/" element={<Login />} />
                         <Route path="/cadastro" element={<Cadastro />} />
                         <Route path="/dashboard" element={<PrivateRoute />}>
-<<<<<<< HEAD
                             <Route path="" element={<Dashboard />}></Route>
                             <Route path="users/:id" element={<UserManagePage />} />
-=======
                             <Route path="" element={<Dashboard />} />
->>>>>>> 40e8e9f98ff86f0fabfec8e27fc2c6fd6d1a67ab
                         </Route>
                         <Route path="*" element={<NotFound />} />
                     </Routes>
