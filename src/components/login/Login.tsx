@@ -72,10 +72,14 @@ export default function Login() {
               pattern: {
                 value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                 message: "Insira um email válido",
+                
               },
             })}
+            className={`${errors.email ? Styles.inputError : ""}`}
           />
-          {errors.email && <span>{errors.email.message}</span>}
+          {errors.email && (
+            <span className={Styles.error}>{errors.email.message}</span>
+          )}
         </div>
 
         <label htmlFor="password">Senha:</label>
@@ -93,8 +97,11 @@ export default function Login() {
                 message: "A senha deve ter no máximo 20 caracteres",
               },
             })}
+            className={`${errors.password ? Styles.inputError : ""}`}
           />
-          {errors.password && <span>{errors.password.message}</span>}
+          {errors.password && (
+            <span className={Styles.error}>{errors.password.message}</span>
+          )}
         </div>
 
         <LoadingButton
