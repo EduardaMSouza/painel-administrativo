@@ -5,7 +5,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 100vh;
+    min-height: calc(100vh - 156px);
     margin: 0 auto;
     padding: 20px;
   

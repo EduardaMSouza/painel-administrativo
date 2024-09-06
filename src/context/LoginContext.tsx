@@ -27,12 +27,9 @@ export const LoginProvider: React.FC<loginProviderProps> = ({ children }: loginP
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
-            }).then((data) => {
-                if(data.ok) {
+            }).then(() => 
                 setLogin(true)
-            }else{
-                setLogin(false)
-            }}).catch(() => setLogin(false));
+           ).catch(() => setLogin(false));
         }
 
         fetchData();
