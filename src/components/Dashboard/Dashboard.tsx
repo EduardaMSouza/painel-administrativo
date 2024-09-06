@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import styles from './Dashboard.module.scss';
 import User from "../../utils/user";
-import { Pagination, Skeleton } from "@mui/material";
+import { Card, Pagination } from "@mui/material";
+import UserCard from "../UserCard/UserCard";
+
 
 interface PaginationInfo {
   currentPage: number;
@@ -79,26 +81,9 @@ export default function Dashboard() {
               <Skeleton variant="text" width={120} height={20} />
             </div>
           ))
-        ) : (
-          users.map((user) => (
-            <div key={user.id} className={styles.userCard}>
-              <div className={styles.userField}>
-                <strong>ID:</strong> {user.id}
-              </div>
-              <div className={styles.userField}>
-                <strong>Nome:</strong> {user.name}
-              </div>
-              <div className={styles.userField}>
-                <strong>Email:</strong> {user.email}
-              </div>
-              <div className={styles.userField}>
-                <strong>Senha:</strong> {user.password}
-              </div>
-              {user.role && (
-                <div className={styles.userField}>
-                  <strong>Função:</strong> {user.role}
-                </div>
-              )}
+        ) : {users.map((user) => (
+          <UserCard user={user}/>
+        ))}}
             </div>
           ))
         )}

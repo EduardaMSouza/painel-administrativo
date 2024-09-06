@@ -13,13 +13,48 @@
     gap: 20px;
   }
   
-  .userCard {
-    background-color: #f9f9f9;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    width: 100%; 
+  
+  .userCardWrapper {
+    position: relative;
   }
+  
+  .moreButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    position: relative;
+  }
+  
+  .modal {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+  
+  .modalContent {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .modalOption {
+    background: none;
+    border: none;
+    padding: 10px;
+    text-align: left;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  .modalOption:hover {
+    background-color: #f0f0f0;
+  }
+  
   
   .userField {
     margin-bottom: 10px;
