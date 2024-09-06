@@ -79,6 +79,7 @@
     margin-bottom: 10px;
 }
 .modalOverlay {
+    
     background-color: rgba(0, 0, 0, 0.75);
     position: fixed;
     top: 0;
@@ -92,10 +93,14 @@
 }
 
 .modalContent {
+    display: flex;
+    justify-content: space-between;
     background-color: white;
     padding: 20px;
     border-radius: 8px;
-    max-width: 500px;
+    max-width: 400px;
     width: 100%;
-    z-index: 1001; 
+    
 }
+
+

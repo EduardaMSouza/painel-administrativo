@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from './Dashboard.module.scss';
 import User from "../../utils/user";
-import { Card, Pagination, Skeleton } from "@mui/material";
+import { Pagination, Skeleton } from "@mui/material";
 import UserCard from "../UserCard/UserCard";
 
 
