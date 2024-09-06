@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import Styles from "./Login.module.scss";
 import { Bounce, toast, ToastContainer } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
+import { TextField, Button } from "@mui/material";
 
 interface FormData {
   email: string;
@@ -63,10 +64,12 @@ export default function Login() {
   return (
     <div className={Styles.container_login}>
       <form onSubmit={handleSubmit((data) => authenticate(data))}>
-        <label htmlFor="email">Email:</label>
         <div className={Styles.container_individual}>
-          <input
+          <TextField
             type="email"
+            label="Email"
+            variant="outlined"
+            fullWidth
             {...register("email", {
               required: "O email é obrigatório",
               pattern: {
@@ -75,17 +78,17 @@ export default function Login() {
                 
               },
             })}
-            className={`${errors.email ? Styles.inputError : ""}`}
+            error={!!errors.email}
+            helperText={errors.email ? errors.email.message : ""}
           />
-          {errors.email && (
-            <span className={Styles.error}>{errors.email.message}</span>
-          )}
         </div>
 
-        <label htmlFor="password">Senha:</label>
         <div className={Styles.container_individual}>
-          <input
+          <TextField
             type="password"
+            label="Senha"
+            variant="outlined"
+            fullWidth
             {...register("password", {
               required: "A senha é obrigatória",
               minLength: {
@@ -97,11 +100,9 @@ export default function Login() {
                 message: "A senha deve ter no máximo 20 caracteres",
               },
             })}
-            className={`${errors.password ? Styles.inputError : ""}`}
+            error={!!errors.password}
+            helperText={errors.password ? errors.password.message : ""}
           />
-          {errors.password && (
-            <span className={Styles.error}>{errors.password.message}</span>
-          )}
         </div>
 
         <LoadingButton
