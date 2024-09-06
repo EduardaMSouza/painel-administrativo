@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import styles from './Dashboard.module.scss';
 import User from "../../utils/user";
-import { Pagination, Skeleton } from "@mui/material";
+import { Pagination, Skeleton, Card, TextField } from "@mui/material";
 import UserCard from "../UserCard/UserCard";
+import stylesCard from "../UserCard/user-card.module.scss"
 
 interface PaginationInfo {
   currentPage: number;
@@ -28,7 +29,7 @@ export default function Dashboard() {
   const [page, setPage] = useState(1);
   const [pagination, setPagination] = useState<PaginationInfo | null>(null);
   const [loading, setLoading] = useState(true); 
-  const [percentage, setPercentage] = useState();
+  const [filter, setFilter] = useState(''); 
 
   const handleChange = (_event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
@@ -61,29 +62,58 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    fetchData(page, 3);
+    fetchData(page, 12);
   }, [page]);
 
   const refreshUsers = () => {
-    fetchData(page, 3);
+    fetchData(page, 12);
   };
+
+
+  const filteredUsers = users.filter(user =>
+    user.name.toLowerCase().includes(filter.toLowerCase())
+  );
 
   return (
     <section className={styles.dashboard}>
       <h1>Lista de Usuários</h1>
+      
+      <TextField
+        label="Filtrar por nome"
+        variant="outlined"
+        value={filter}
+        onChange={(e) => setFilter(e.target.value)} 
+        fullWidth
+        margin="normal"
+      />
+
+      <Card
+          sx={{
+            padding: "20px",
+            margin: "20px 0",
+            backgroundColor: "#f5f5f5",
+            borderRadius: "10px",
+            boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+            fontSize: "18px",
+            fontWeight: "bold",
+            textAlign: "center",
+          }}
+        >
+  Número de usuários: {pagination?.totalItems}
+</Card>
       <div className={styles.usersContainer}>
         {loading ? (
           Array.from(new Array(3)).map((_, index) => (
-            <div key={index} className={styles.userCard}>
+            <div key={index} className={stylesCard.userCard}>
+              <Skeleton variant="text" width={120} height={30} style={{ marginBottom: '10px' }} />
+              <Skeleton variant="text" width={80} height={20} style={{ marginBottom: '5px' }} />
+              <Skeleton variant="text" width={200} height={20} style={{ marginBottom: '5px' }} />
+              <Skeleton variant="text" width={180} height={20} style={{ marginBottom: '5px' }} />
               <Skeleton variant="text" width={100} height={20} />
-              <Skeleton variant="text" width={200} height={20} />
-              <Skeleton variant="text" width={150} height={20} />
-              <Skeleton variant="text" width={180} height={20} />
-              <Skeleton variant="text" width={120} height={20} />
             </div>
           ))
         ) : (
-          users.map((user) => (
+          filteredUsers.map((user) => (
             <UserCard key={user.id} user={user} onUpdate={refreshUsers} onDelete={refreshUsers} />
           ))
         )}
