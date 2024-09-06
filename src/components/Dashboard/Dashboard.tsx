@@ -61,11 +61,11 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    fetchData(page, 3);
+    fetchData(page, 12);
   }, [page]);
 
   const refreshUsers = () => {
-    fetchData(page, 3);
+    fetchData(page, 12);
   };
 
 
