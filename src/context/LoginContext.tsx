@@ -1,7 +1,8 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 
 interface LoginContextType {
     login: boolean;
+    setLogin: Dispatch<SetStateAction<boolean>>;
 }
 
 export const LoginContext = createContext<LoginContextType | null>(null);
@@ -36,7 +37,7 @@ export const LoginProvider: React.FC<loginProviderProps> = ({ children }: loginP
     }, [login]);
 
     return (
-        <LoginContext.Provider value={{ login }}>
+        <LoginContext.Provider value={{ login, setLogin }}>
             {children}
         </LoginContext.Provider>
     );

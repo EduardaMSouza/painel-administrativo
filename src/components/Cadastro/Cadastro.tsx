@@ -3,6 +3,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import styles from "./Cadastro.module.scss";
 import { useNavigate, Link } from "react-router-dom";
+import { TextField, Button } from "@mui/material";
+import { useLoginContext } from "../../context/LoginContext";
+
 
 // Esquema de validação do Yup
 const schema = yup
@@ -28,6 +31,8 @@ interface FormInputs {
 }
 
 export default function Cadastro() {
+  const {login, setLogin} = useLoginContext()
+
   const {
     register,
     handleSubmit,
@@ -54,8 +59,8 @@ export default function Cadastro() {
         throw new Error(responseData.error);
       }
 
-      localStorage.setItem("@auth/token", responseData.token);
-
+      localStorage.setItem("@auth/token", responseData);
+      setLogin(true)
       navigate("/dashboard");
     } catch (error) {
       console.error(error);
@@ -66,63 +71,67 @@ export default function Cadastro() {
     <div className={styles.container_login}>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.formContainer}>
         <div className={styles.formGroup}>
-          <label htmlFor="name">Nome</label>
-          <input
+          <TextField
             id="name"
-            type="text"
+            label="Nome"
+            variant="outlined"
+            fullWidth
             {...register("name")}
-            className={`${errors.name ? styles.inputError : ""}`}
+            error={!!errors.name}
+            helperText={errors.name ? errors.name.message : ""}
           />
-          {errors.name && <p className={styles.error}>{errors.name.message}</p>}
         </div>
-
+  
         <div className={styles.formGroup}>
-          <label htmlFor="email">Email</label>
-          <input
+          <TextField
             id="email"
+            label="Email"
             type="email"
+            variant="outlined"
+            fullWidth
             {...register("email")}
-            className={`${errors.email ? styles.inputError : ""}`}
+            error={!!errors.email}
+            helperText={errors.email ? errors.email.message : ""}
           />
-          {errors.email && (
-            <p className={styles.error}>{errors.email.message}</p>
-          )}
         </div>
-
+  
         <div className={styles.formGroup}>
-          <label htmlFor="password">Senha</label>
-          <input
+          <TextField
             id="password"
+            label="Senha"
             type="password"
+            variant="outlined"
+            fullWidth
             {...register("password")}
-            className={`${errors.password ? styles.inputError : ""}`}
+            error={!!errors.password}
+            helperText={errors.password ? errors.password.message : ""}
           />
-          {errors.password && (
-            <p className={styles.error}>{errors.password.message}</p>
-          )}
         </div>
-
+  
         <div className={styles.formGroup}>
-          <label htmlFor="confirmPassword">Confirmar Senha</label>
-          <input
+          <TextField
             id="confirmPassword"
+            label="Confirmar Senha"
             type="password"
+            variant="outlined"
+            fullWidth
             {...register("confirmPassword")}
-            className={`${errors.confirmPassword ? styles.inputError : ""}`}
+            error={!!errors.confirmPassword}
+            helperText={errors.confirmPassword ? errors.confirmPassword.message : ""}
           />
-          {errors.confirmPassword && (
-            <p className={styles.error}>{errors.confirmPassword.message}</p>
-          )}
         </div>
-
-        <button
+  
+        <Button
           type="submit"
-          className={styles.submitButton}
+          variant="contained"
+          color="primary"
+          fullWidth
           disabled={isSubmitting}
+          className={styles.submitButton}
         >
           {isSubmitting ? "Carregando..." : "Cadastrar"}
-        </button>
-
+        </Button>
+  
         <div>
           <p>
             Já tem uma conta? <Link to="/">Faça login</Link>
