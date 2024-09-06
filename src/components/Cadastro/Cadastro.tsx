@@ -6,8 +6,6 @@ import { useNavigate, Link } from "react-router-dom";
 import { TextField, Button } from "@mui/material";
 import { useLoginContext } from "../../context/LoginContext";
 
-
-// Esquema de validação do Yup
 const schema = yup
   .object({
     name: yup.string().required("Nome é obrigatório"),
@@ -20,6 +18,7 @@ const schema = yup
       .string()
       .oneOf([yup.ref("password")], "As senhas não coincidem")
       .required("Confirmação de senha é obrigatória"),
+    role: yup.string().required("Função é obrigatória"), // Adicionando validação para role
   })
   .required();
 
@@ -28,10 +27,11 @@ interface FormInputs {
   email: string;
   password: string;
   confirmPassword: string;
+  role: string;
 }
 
 export default function Cadastro() {
-  const {login, setLogin} = useLoginContext()
+  const { login, setLogin } = useLoginContext();
 
   const {
     register,
@@ -60,7 +60,7 @@ export default function Cadastro() {
       }
 
       localStorage.setItem("@auth/token", responseData);
-      setLogin(true)
+      setLogin(true);
       navigate("/dashboard");
     } catch (error) {
       console.error(error);
@@ -81,7 +81,19 @@ export default function Cadastro() {
             helperText={errors.name ? errors.name.message : ""}
           />
         </div>
-  
+
+        <div className={styles.formGroup}>
+          <TextField
+            id="role"
+            label="Função"
+            variant="outlined"
+            fullWidth
+            {...register("role")}
+            error={!!errors.role}
+            helperText={errors.role ? errors.role.message : ""}
+          />
+        </div>
+
         <div className={styles.formGroup}>
           <TextField
             id="email"
@@ -94,7 +106,7 @@ export default function Cadastro() {
             helperText={errors.email ? errors.email.message : ""}
           />
         </div>
-  
+
         <div className={styles.formGroup}>
           <TextField
             id="password"
@@ -107,7 +119,7 @@ export default function Cadastro() {
             helperText={errors.password ? errors.password.message : ""}
           />
         </div>
-  
+
         <div className={styles.formGroup}>
           <TextField
             id="confirmPassword"
@@ -117,10 +129,12 @@ export default function Cadastro() {
             fullWidth
             {...register("confirmPassword")}
             error={!!errors.confirmPassword}
-            helperText={errors.confirmPassword ? errors.confirmPassword.message : ""}
+            helperText={
+              errors.confirmPassword ? errors.confirmPassword.message : ""
+            }
           />
         </div>
-  
+
         <Button
           type="submit"
           variant="contained"
@@ -131,7 +145,7 @@ export default function Cadastro() {
         >
           {isSubmitting ? "Carregando..." : "Cadastrar"}
         </Button>
-  
+
         <div>
           <p>
             Já tem uma conta? <Link to="/">Faça login</Link>
