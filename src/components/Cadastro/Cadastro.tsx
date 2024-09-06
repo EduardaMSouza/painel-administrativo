@@ -18,7 +18,7 @@ const schema = yup
       .string()
       .oneOf([yup.ref("password")], "As senhas não coincidem")
       .required("Confirmação de senha é obrigatória"),
-    role: yup.string().required("Função é obrigatória"), // Adicionando validação para role
+    role: yup.string().required("Função é obrigatória"), 
   })
   .required();
 

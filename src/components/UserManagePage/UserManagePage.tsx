@@ -87,7 +87,7 @@ const UserManagePage = () => {
                     theme: "light",
                     transition: Bounce,
                 });
-                navigate('/users'); 
+                navigate('/dashboard'); 
             } else {
                 throw new Error('Failed to update user');
             }
@@ -188,6 +188,7 @@ const UserManagePage = () => {
             <Typography variant="h4" gutterBottom>
                 Gerenciar Usuário
             </Typography>
+            
             <TextField
                 label="Nome"
                 name="name"
@@ -212,6 +213,9 @@ const UserManagePage = () => {
                 </Button>
                 <Button variant="contained" color="error" onClick={openDeleteConfirmDialog} sx={{ ml: 2 }} disabled={loading}>
                     Deletar Usuário
+                </Button>
+                <Button variant="contained" color="primary" onClick={() => navigate('/dashboard')} sx={{ ml: 2 }} disabled={loading}>
+                    Voltar
                 </Button>
             </Box>
 

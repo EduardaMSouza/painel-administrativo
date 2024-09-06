@@ -13,14 +13,14 @@ interface LoginProviderProps {
 
 export const LoginProvider: React.FC<LoginProviderProps> = ({ children }: LoginProviderProps) => {
     const [login, setLogin] = useState<boolean>(false);
-    const [loading, setLoading] = useState<boolean>(true); // Estado para verificar se a autenticação está carregando
+    const [loading, setLoading] = useState<boolean>(true); 
 
     useEffect(() => {
         async function fetchData() {
             const token = localStorage.getItem("@auth/token");
 
             if (!token) {
-                setLoading(false); // Termina o carregamento mesmo sem token
+                setLoading(false); 
                 return;
             }
 
@@ -40,15 +40,15 @@ export const LoginProvider: React.FC<LoginProviderProps> = ({ children }: LoginP
                 console.error('Erro ao validar o token:', error);
                 setLogin(false);
             } finally {
-                setLoading(false); // Termina o carregamento após a verificação
+                setLoading(false); 
             }
         }
 
         fetchData();
-    }, []); // Removemos `login` das dependências, pois só queremos que o efeito rode uma vez
+    }, []); 
 
     if (loading) {
-        return <div>Carregando...</div>; // Você pode substituir isso com um componente de carregamento real
+        return <div>Carregando...</div>; 
     }
 
     return (
