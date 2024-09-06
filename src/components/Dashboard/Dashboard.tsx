@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from './Dashboard.module.scss';
 import User from "../../utils/user";
-import { Pagination, Skeleton } from "@mui/material";
+import { Pagination, Skeleton, Card } from "@mui/material";
 import UserCard from "../UserCard/UserCard";
 
 interface PaginationInfo {
@@ -71,6 +71,20 @@ export default function Dashboard() {
   return (
     <section className={styles.dashboard}>
       <h1>Lista de Usuários</h1>
+      <Card
+          sx={{
+            padding: "20px",
+            margin: "20px 0",
+            backgroundColor: "#f5f5f5",
+            borderRadius: "10px",
+            boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+            fontSize: "18px",
+            fontWeight: "bold",
+            textAlign: "center",
+          }}
+        >
+  Número de usuários: {pagination?.totalItems}
+</Card>
       <div className={styles.usersContainer}>
         {loading ? (
           Array.from(new Array(3)).map((_, index) => (
